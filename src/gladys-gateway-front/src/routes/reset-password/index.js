@@ -35,12 +35,16 @@ class ResetPasswordPage extends Component {
         this.setState({ success: true, resetInProgress: false });
       }
     } catch (e) {
-      this.setState({ errorLink: true, resetInProgress: false });
+      if (e && e.response && e.response.data && e.response.data.error_message === 'WRONG_2FA') {
+        this.setState({ wrong2FA: true, resetInProgress: false });
+      } else {
+        this.setState({ errorLink: true, resetInProgress: false });
+      }
     }
   };
 
 
-  render({}, { password, success, errorLink, twoFactorEnabled, passwordRepeat, twoFactorCode, passwordError, passwordNotMatching, resetInProgress }) {
+  render({}, { password, success, errorLink, twoFactorEnabled, passwordRepeat, twoFactorCode, passwordError, passwordNotMatching, resetInProgress, wrong2FA }) {
     return (
       <ResetPassword
         password={password}
@@ -48,6 +52,7 @@ class ResetPasswordPage extends Component {
         resetPassword={this.resetPassword}
         success={success}
         errorLink={errorLink}
+        wrong2FA={wrong2FA}
         passwordError={passwordError}
         passwordNotMatching={passwordNotMatching}
         twoFactorEnabled={twoFactorEnabled}

@@ -12,6 +12,11 @@ const ResetPassworFrom = ({ children, ...props }) => (
        We cannot retrieve your reset password link. Maybe it was already used or has expired!
        </div>
       }
+      {props.wrong2FA &&
+        <div class="alert alert-danger" role="alert">
+        Your two factor code is not valid. If you lost it, please contact support on hello@gladysassistant.com.
+        </div>
+      }
       {props.passwordNotMatching &&
          <div class="alert alert-warning" role="alert">
          Password are not matching.

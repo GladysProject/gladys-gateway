@@ -24,6 +24,7 @@ const ResetPassword = ({ children, ...props }) => (
                 updatePasswordRepeat={props.updatePasswordRepeat}
                 success={props.success}
                 errorLink={props.errorLink}
+                wrong2FA={props.wrong2FA}
                 resetInProgress={props.resetInProgress}
               />
             }
