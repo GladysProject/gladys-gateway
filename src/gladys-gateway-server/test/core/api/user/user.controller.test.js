@@ -498,6 +498,29 @@ describe('POST /users/reset-password', () => {
     .then((response) => {
 
     }));
+
+  it('should return 403, wrong 2FA', () => request(TEST_BACKEND_APP)
+    .post('/users/reset-password')
+    .set('Accept', 'application/json')
+    .send({
+      token: 'd295b5bcc79c7951a95c24a719a778b6dc18334a9fe175a2807513d6e4d1b9a849fad6fab13adc00cf094636c5ad62263a0469d19447a42a82bd729f8c8e7b07',
+      srp_salt: 'salt',
+      srp_verifier: 'verifier',
+      rsa_public_key: 'pubkey',
+      ecdsa_public_key: 'pubkey',
+      rsa_encrypted_private_key: 'encrypted-private-key',
+      ecdsa_encrypted_private_key: 'encrypted-private-key',
+      two_factor_code: 1121212,
+    })
+    .expect('Content-Type', /json/)
+    .expect(403)
+    .then((response) => {
+      should.deepEqual(response.body, {
+        status: 403,
+        error_code: 'FORBIDDEN',
+        error_message: 'WRONG_2FA',
+      });
+    }));
 });
 
 

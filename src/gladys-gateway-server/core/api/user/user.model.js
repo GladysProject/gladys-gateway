@@ -532,7 +532,7 @@ module.exports = function UserModel(logger, db, redisClient, jwtService, mailSer
 
       if (!tokenValidates) {
         logger.info(`Reset password error: two factor code is not valid.`);
-        throw new ForbiddenError();
+        throw new ForbiddenError('WRONG_2FA');
       }
     }
 
