@@ -3,11 +3,13 @@ const axios = require('axios');
 async function getAccessToken(state) {
   const route = state.isInstance ? '/instances/access-token' : '/users/access-token';
 
-  state.accessToken = (await axios.get(state.serverUrl + route, {
-    headers: {
-      authorization: state.refreshToken,
-    },
-  })).data.access_token;
+  state.accessToken = (
+    await axios.get(state.serverUrl + route, {
+      headers: {
+        authorization: state.refreshToken,
+      },
+    })
+  ).data.access_token;
 }
 
 function post(url, data, state) {
@@ -86,6 +88,7 @@ function upload(url, form, onUploadProgress, state) {
         'Content-Type': form.getHeaders()['content-type'],
       },
       onUploadProgress,
+      maxContentLength: Infinity,
     })
     .then((result) => result.data)
     .catch(async (err) => {
